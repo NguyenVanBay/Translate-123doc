@@ -2,9 +2,9 @@
 
 _source https://stackoverflow.com/questions/621884/database-development-mistakes-made-by-application-developers_
 
-**1. Không sử dụng các chỉ số thích hợp**
+**1. Không sử dụng các chỉ mục thích hợp**
 
-Đây là một điều khá đơn giản nhưng vẫn xảy ra bất kì lúc nào. Khóa ngoài nên có các indexes. Nếu bạn đang sử dụng một trường trong một lệnh
+Đây là một điều khá đơn giản nhưng vẫn xảy ra bất kì lúc nào. Khóa ngoài nên có các chỉ mục. Nếu bạn đang sử dụng một trường trong một lệnh
 
 WHERE bạn nên (có thể) có một chỉ mục trên đó. Các chỉ mục như vậy thường bao gồm nhiều cột dựa trên các truy vấn bạn cần thực hiện.
 
@@ -12,7 +12,7 @@ WHERE bạn nên (có thể) có một chỉ mục trên đó. Các chỉ mục
 
 Cơ sở dữ liệu của bạn có thể thay đổi nhưng nếu cơ sở dữ liệu của bạn hỗ trợ tất cả tham chiếu--có nghĩa là tất cả các khóa ngoài được đảm bảo trỏ đến một thực thế tồn tại--bạn nên sử dụng nó.
 
-Rất phổ biến để thấy sự thất bại này trên cơ sở dữ liệu MySQL. Tôi không tin rằng MyISAM hỗ trợ nó. InnoDB làm được. Bạn sẽ tìm thấy những người đang sử dụng MyISAM hoặc những người đang sử dụng InnoDB nhưng dù thế nào đi nữa cũng không sử dụng nó.
+Rất phổ biến để thấy sự thất bại này trên cơ sở dữ liệu MySQL. Tôi không tin rằng MyISAM hỗ trợ nó. InnoDB làm được. Bạn sẽ tìm thấy những người đang sử dụng MyISAM hoặc những người đang sử dụng InnoDB nhưng dù thế nào đi nữa cũng không sử dụng nó để làm mọi thứ.
 
 Thêm nữa:
 
@@ -20,37 +20,35 @@ Thêm nữa:
 - [Khóa ngoài thực sự cần thiết trong một thiết kế cơ sở dữ liệu?](https://stackoverflow.com/questions/18717/are-foreign-keys-really-necessary-in-a-database-design)
 - [Khóa ngoài thực sự cần thiết trong một thiết kế cơ sở dữ liệu?](http://www.diovo.com/2008/08/are-foreign-keys-really-necessary-in-a-database-design/)
 
-**3. Sử dụng các khóa chính tự nhiên chứ không phải là để đại diện (kỹ thuật)**
+**3. Sử dụng các khóa chính tự nhiên chứ không phải là khóa đại diện (kỹ thuật)**
 
-Các khóa tự nhiên là các khoá dựa trên dữ liệu bên ngoài có ý nghĩa đó (có vẻ là) duy nhất.Các ví dụ phổ biến là mã sản phẩm, mã bang 2-chữ-cái (US), **social security number** và vv.... Các khóa chính thay thế hoặc kỹ thuật chính là những khoá hoàn toàn không có ý nghĩa bên ngoài hệ thống. Chúng được sinh ra hoàn toàn để xác định thực thể vàthường là các trường tự động gia tăng (SQL Server, MySQL, khác) hoặc các trình tự (nhất là Oracle).
+Các khóa tự nhiên là các khoá dựa trên dữ liệu bên ngoài có ý nghĩa đó (có vẻ là) duy nhất.Các ví dụ phổ biến là mã sản phẩm, mã bang 2-chữ-cái (US), **số an sinh xã hội** và vv.... Các khóa chính thay thế hoặc kỹ thuật chính là những khoá hoàn toàn không có ý nghĩa bên ngoài hệ thống. Chúng được sinh ra hoàn toàn để xác định thực thể vàthường là các trường tự động gia tăng (SQL Server, MySQL, khác) hoặc các trình tự (nhất là Oracle).
 
-Theo tôi, bạn nên **luôn luôn** sử dụng các khóa đại diện. Vấn đề này đã đưa ra trong những câu hỏi sau:
+Theo tôi, bạn nên **luôn luôn** sử dụng các khóa đại diện. Vấn đề này đã đưa ra những câu hỏi sau:
 
 - [Bạn thích khóa chính của mình như thế nào?](https://stackoverflow.com/questions/404040/how-do-you-like-your-primary-keys)
-- [Cách luyện tập tốt nhất cho các khóa chính trong các bảng?](https://stackoverflow.com/questions/337503/whats-the-best-practice-for-primary-keys-in-tables)
+- [Cách thực hành nào là tốt nhất cho các khóa chính trong các bảng?](https://stackoverflow.com/questions/337503/whats-the-best-practice-for-primary-keys-in-tables)
 - [Bạn sử dụng định dạng khóa chính nào trong trường hợp này.](https://stackoverflow.com/questions/506164/which-format-of-primary-key-would-you-use-in-this-situation)
 - [Khóa đại diên vs khóa tự nhiên/vai trò](https://stackoverflow.com/questions/63090/surrogate-vs-natural-business-keys)
-- [Tôi có nên dành riêng trường khóa chính?](https://stackoverflow.com/questions/166750/should-i-have-a-dedicated-primary-key-field)
+- [Tôi có nên dành khóa chính cho lĩnh vực riêng?](https://stackoverflow.com/questions/166750/should-i-have-a-dedicated-primary-key-field)
 
 Đây là một chủ đề gây nhiều tranh cãi mà bạn sẽ không nhận được ý kiến chung.Trong khi bạn có thể tìm thấy một số người, những người nghĩ rằng các khóa tự nhiên là trong một số tình huống OK, bạn sẽ không tìm thấy bất kỳ lời chỉ trích nào khóa đại diện khác không cần thiết. Đó là một nhược điểm nhỏ nếu bạn hỏi tôi.
 
 Nhớ lại, ngay đến [các quốc gia có thể không còn tồn tại](http://en.wikipedia.org/wiki/ISO_3166-1) (Ví dụ từ Yugoslavia).
 
-**4. Viết các truy vấn yêu cầu
-
-DISTINCT hoạt động**
+**4. Viết các truy vấn yêu cầu DISTINCT hoạt động**
 
 Bạn thường thấy điều này trong các truy vấn ORM-generated. Nhìn vào đầu ra log từ Hibernate và bạn sẽ thấy tất cả các truy vấn bắt đầu với:
 
 SELECT DISTINCT ...
 
-Đây là một chút của một shortcut để đảm bảo bạn không trả lại các hàng trùng lặp và do đó nhận được các đối tượng trùng lặp. Đôi khi bạn cũng thấy mọi người đang làm việc này. Nếu bạn nhìn thấy nó quá nhiều đó là một flag red thực sự. Không phải cái đó
+Đây là một chút của một shortcut để đảm bảo bạn không trả lại các hàng trùng lặp và do đó nhận được các đối tượng trùng lặp. Đôi khi bạn cũng thấy mọi người đang làm việc này. Nếu bạn nhìn thấy nó quá nhiều đó là một điều đáng cảnh báo thực sự. Không phải cái đó
 
 DISTINCT là xấu hoặc không có ứng dụng hợp lệ. Nó tốt (cả 2 mặt) nhưng nó không phải đại diện hoặc tạm thời để viết các câu truy vấn đúng.
 
 Từ [Tại sao tôi gét DISTINCT](http://weblogs.sqlteam.com/markc/archive/2008/11/11/60752.aspx):
 
-> Trường hợp mọi thứ bắt đầu trở nên tôi tệ theo ý kiến ​​của tôi là khi một nhà phát triển đang xây dựng truy vấn quan hệ, ghép bảng lại với nhau, và đột nhiên anh ta nhận ra nó **trông** như ông đang bị trùng lặp (hoặc thậm chí nhiều hơn) các hàng và phản ứng tức thời của ông..."giải pháp" của ông đối với "vấn đề" này là ném vào từ khóa DISTINCT và **POOF** tất cả những rắc rối của ông đi.
+> Trường hợp mọi thứ bắt đầu trở nên chưa theo ý kiến ​​của tôi là khi một nhà phát triển đang xây dựng truy vấn quan hệ, ghép bảng lại với nhau, và đột nhiên anh ta nhận ra nó **trông** như ông đang bị trùng lặp (hoặc thậm chí nhiều hơn) các hàng và phản ứng tức thời của ông..."giải pháp" của ông đối với "vấn đề" này là ném vào từ khóa DISTINCT và **POOF** tất cả những rắc rối của ông biến mất.
 
 **5. Khuyến khích tập hợp các ghép nối**
 
@@ -80,11 +78,11 @@ AND t1.roleid = 1
 
 > Thời gian truy vấn: 0.016 s
 
-> Chuẩn luôn. Ghép nối Tôi đề xuất ** nhanh gấp 2 lần nhóm.**
+> Chuẩn luôn. Ghép nối Tôi đề xuất ** nhanh gấp 20 lần tổng hợp.**
 
 **6. Không đơn giản hóa các truy vấn phức tạp thông qua các view**
 
-Không phải tất cả các nhà cung cấp cơ sở dữ liệu đều hỗ trợ views nhưng đối với những người làm, họ có thể rất đơn giản hóa các truy vấn nếu được sử dụng một cách thận trọng. Ví dụ,trên một dự án tôi sử dụng một [generic Party model](http://www.tdan.com/view-articles/5014/) cho CRM. Đây là một kỹ thuật mô hình rất mạnh mẽ và linh hoạt nhưng có thể dẫn đến nhiều ghép nôi. Trong mô hình này đã có:
+Không phải tất cả các nhà cung cấp cơ sở dữ liệu đều hỗ trợ views nhưng đối với những người làm, họ có thể rất đơn giản hóa các truy vấn nếu được sử dụng một cách thận trọng. Ví dụ,trên một dự án tôi sử dụng một [generic Party model](http://www.tdan.com/view-articles/5014/) cho CRM. Đây là một kỹ thuật mô hình rất mạnh mẽ và linh hoạt nhưng có thể dẫn đến nhiều người tham ra. Trong mô hình này đã có:
 
 - **Party**: người và tổ chức;
 - **Party Role**: những điều mà các bên đã làm, ví dụ như Employee and Employer;
@@ -92,10 +90,10 @@ Không phải tất cả các nhà cung cấp cơ sở dữ liệu đều hỗ t
 
 Ví dụ:
 
-- Ted là 1 Person, là 1 tập con Party;
-- Ted có nhiều luật, 1 trong số chúng là Employee;
-- Intel là 1 tổ chức, là 1 tập con cửa Party;
-- Intel có nhiều luật, 1 trong số chúng là Employer;
+- Ted là 1 người, là 1 loại phụ của bữa tiệc;
+- Ted có nhiều vai trò, 1 trong số chúng là nhân viên;
+- Intel là 1 tổ chức, là 1 loại phụ của bữa tiệc;
+- Intel có nhiều vai trò, 1 trong số chúng là nhà tuyển dụng;
 - Intel tuyển Ted, nghĩa là có quan hệ giữa các luật tương ứng của chúng.
 
 Vì vậy, có năm table tham gia để liên kết Ted **to his employer**.Bạn giả định tất cả nhân viên là Người (không phải tổ chức) và cung cấp các helper view:
@@ -111,7 +109,7 @@ JOIN party p2 ON parent.party_id = p2.id
 
 Và đột nhiên bạn có một cái nhìn rất đơn giản về dữ liệu mà bạn muốn nhưng trên một mô hình dữ liệu có tính linh hoạt cao.
 
-**7.  Không cải thiện đầu vào**
+**7.  Không thanh lọc đầu vào**
 
 Đây là một cái rất lớn. Bây giờ tôi thích PHP nhưng nếu bạn không biết những gì bạn đang làm rất dễ dàng để tạo các trang web dễ bị tấn công. Không có gì kết luận nó tốt hơn so với [story of little Bobby Tables](http://xkcd.com/327/).
 
@@ -119,9 +117,7 @@ Dữ liệu được cung cấp bởi người dùng bằng các URL, dữ liệ
 
 **8.Không sử dụng các câu lệnh được chuẩn bị**
 
-Báo cáo chuẩn bị là khi bạn biên dịch một truy vấn trừ dữ liệu được sử dụng trong chèn, cập nhật và 
-
-WHERE clauses và sẽ cung cấp dữ liệu cho nó sau. Ví dụ:
+Câu lệnh soạn sẵn là khi bạn biên dịch một truy vấn trừ dữ liệu được sử dụng trong chèn, cập nhật, mệnh đề WHERE và sẽ cung cấp dữ liệu cho nó sau. Ví dụ:
 
 SELECT * FROM users WHERE username = 'bob'
 
@@ -135,7 +131,7 @@ SELECT * FROM users WHERE username = :username
 
 tùy thuộc vào nền tảng của bạn.
 
-Tôi đã từng thấy các cơ sở dữ liệu bị phá hủy vì điều này. Về cơ bản,mỗi lần bất kỳ cơ sở dữ liệu hiện đại gặp một quer mới nó phải biên dịch. Nếu nó gặp một truy vấn nó được nhìn thấy trước, bạn đang cho cơ sở dữ liệu cơ hội để cache truy vấn biên dịch và kế hoạch thực hiện. Bằng cách làm các truy vấn rất nhiều bạn đang cho cơ sở dữ liệu cơ hội tìm kiếm và tối ưu thích hợp (ví dụ, bằng cách ghim truy vấn đã biên dịch trong bộ nhớ).
+Tôi đã từng thấy các cơ sở dữ mang đến đầu gối của họ bằng cách điều này. Về cơ bản,mỗi lần bất kỳ cơ sở dữ liệu hiện đại gặp một query mới nó phải biên dịch. Nếu nó gặp một truy vấn nó được nhìn thấy trước, bạn đang cho cơ sở dữ liệu cơ hội để cache truy vấn biên dịch và kế hoạch thực hiện. Bằng cách làm các truy vấn rất nhiều bạn đang cho cơ sở dữ liệu cơ hội tìm kiếm và tối ưu thích hợp (ví dụ, bằng cách ghim truy vấn đã biên dịch trong bộ nhớ).
 
 Sử dụng các câu lệnh chuẩn bị cũng sẽ cung cấp cho bạn số liệu thống kê có ý nghĩa Sử dụng các câu lệnh chuẩn bị cũng sẽ cung cấp cho bạn số liệu thống kê có ý nghĩa.
 
